@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 # criação aplicação
 app = Flask(__name__)
@@ -6,7 +6,7 @@ app = Flask(__name__)
 # rotas
 @app.route('/')
 def index():
-    return 'FakePinterest - Meu primeiro site no ar'
+    return render_template('index.html')
 
 # rodar projeto
 if __name__ == '__main__':
