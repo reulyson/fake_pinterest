@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends 'index.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil - FakePinterest</title>
-</head>
+{% block titulo %}
+Perfil - {{ usuario.title() }}
+{% endblock %}
+
+{% block body %}
 
 <body>
-    <h1>Perfil de {{usuario.title()}}</h1>
+    <h1>Perfil de {{ usuario.title() }}</h1>
     <a href="{{ url_for('index') }}">Home</a>
 </body>
 
-</html>
+{% endblock %}
