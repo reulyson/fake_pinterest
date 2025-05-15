@@ -1,14 +1,21 @@
 {% extends 'index.html' %}
 
 {% block titulo %}
-Perfil - {{ usuario.title() }}
+Perfil - {{ usuario.username.title() }}
 {% endblock %}
 
 {% block body %}
 
 <body>
-    <h1>Perfil de {{ usuario.title() }}</h1>
+    <h1>Perfil de {{ usuario.username.title() }}</h1>
     <a href="{{ url_for('logout') }}">Sair</a>
+
+    <img src="{{url_for('static', filename='fotos_post/default.png')}}">
+
+    {%for foto in usuario.fotos%}
+
+    {%endfor%}
+
 </body>
 
 {% endblock %}
