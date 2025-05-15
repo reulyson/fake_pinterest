@@ -14,6 +14,27 @@
 
 <body>
     <h1>FakePinterest - Meu primeiro site no ar</h1>
+
+    {%block formulario%}
+    <form method="POST">
+        {{form.csrf_token}}
+
+        {{form.usuario.label()}}
+        {{form.usuario()}}
+
+        {{form.senha.label()}}
+        {{form.senha()}}
+
+        {{form.botao()}}
+
+    </form>
+    <h2>
+        <a href="{{url_for('criar_conta')}}">
+            <button>Criar Usuário</button>
+        </a>
+    </h2>
+    {% endblock %}
+
 </body>
 
 {% endblock %}
