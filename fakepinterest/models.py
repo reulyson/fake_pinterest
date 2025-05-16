@@ -13,7 +13,7 @@ class Usuario(database.Model, UserMixin):
     username = database.Column(database.String, nullable=False)
     senha = database.Column(database.String, nullable=False)
     email = database.Column(database.String, nullable=False, unique=True)
-    foto = database.relationship('Foto', backref='usuario', lazy=True)
+    fotos = database.relationship('Foto', backref='usuario', lazy=True)
 
 class Foto(database.Model):
     id = database.Column(database.Integer, primary_key=True, nullable=False)

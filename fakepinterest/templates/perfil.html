@@ -9,11 +9,21 @@ Perfil - {{ usuario.username.title() }}
 <body>
     <h1>Perfil de {{ usuario.username.title() }}</h1>
     <a href="{{ url_for('logout') }}">Sair</a>
+    {%if form%}
+    <form method="POST" enctype="multipart/form-data">
+        {{form.csrf_token}}
 
-    <img src="{{url_for('static', filename='fotos_post/default.png')}}">
+        {{form.foto.label}}
+        {{form.foto}}
 
-    {%for foto in usuario.fotos%}
+        {{form.botao_confirmacao.label}}
+        {{form.botao_confirmacao}}
 
+    </form>
+    {%endif%}
+
+    {% for foto in usuario.fotos %}
+    <img src="{{ url_for('static', filename='fotos_post/{}'.format(foto.imagem)) }}">
     {%endfor%}
 
 </body>

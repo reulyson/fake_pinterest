@@ -1,8 +1,10 @@
 from flask import Flask, render_template, redirect, url_for
 from fakepinterest import app, bcrypt, database
 from flask_login import login_required, login_user, logout_user, current_user
-from fakepinterest.forms import FormCriarConta, FormLogin
-from fakepinterest.models import Usuario
+from fakepinterest.forms import FormCriarConta, FormLogin, FormFoto
+from fakepinterest.models import Usuario, Foto
+import os
+from werkzeug.utils import secure_filename
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -38,15 +40,26 @@ def criar_conta():
         return redirect(url_for('perfil', id_usuario=usuario.id))
     return render_template('criar_conta.html', form=form_criar_conta)
 
-@app.route('/perfil/<id_usuario>')
+@app.route('/perfil/<id_usuario>', methods=['GET', 'POST'])
 @login_required
 def perfil(id_usuario):
     # se o usuário estiver no próprio perfil
     if int(id_usuario) == int(current_user.id):
-        return render_template('perfil.html', usuario=current_user)
+        form_foto = FormFoto()
+
+        if form_foto.validate_on_submit():
+            arquivo = form_foto.foto.data
+            nome_seguro = secure_filename(arquivo.filename)
+            caminho = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                                   app.config['UPLOAD_FOLDER'], nome_seguro)
+            arquivo.save(caminho)
+            foto = Foto(imagem=nome_seguro, id_usuario=current_user.id)
+            database.session.add(foto)
+            database.session.commit()
+        return render_template('perfil.html', usuario=current_user, form=form_foto)
     else:
         usuario = Usuario.query.get(int(id_usuario))
-        return render_template('perfil.html', usuario=usuario)
+        return render_template('perfil.html', usuario=usuario, form=None)
 
 @app.route('/logout')
 @login_required
