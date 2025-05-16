@@ -7,8 +7,9 @@ Perfil - {{ usuario.username.title() }}
 {% block body %}
 
 <body>
+    {% include 'navbar.html' %}
+
     <h1>Perfil de {{ usuario.username.title() }}</h1>
-    <a href="{{ url_for('logout') }}">Sair</a>
     {%if form%}
     <form method="POST" enctype="multipart/form-data">
         {{form.csrf_token}}
